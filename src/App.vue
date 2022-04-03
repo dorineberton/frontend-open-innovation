@@ -1,44 +1,44 @@
 <template>
-  <v-app>
-    <v-app-bar
-      app
-      color="white"
-      dark
-    >
-      <div class="d-flex align-center">
-        <img
-          alt="Logo securiface"
-          class="shrink mr-2"
-          contain
-          src="@/assets/logo.png"
-          transition="scale-transition"
-          width="40"
-        />
-      </div>
-      <div class="text-h4 black--text">Securiface</div>
-
-    </v-app-bar>
-
-    <v-main>
-      <register/>
-    </v-main>
-  </v-app>
+  <div id="app" class="overflow-hidden">
+  <v-app-bar
+    elevation="4"
+    color="#fff"
+  >
+      <img alt="Vue logo" src="./assets/logo.png" width="40">
+      <router-link to="/" class="text-h2" style="text-decoration:none">
+        <v-toolbar-title>Securiface</v-toolbar-title>
+      </router-link>
+  </v-app-bar>
+  <v-main>
+    <v-container>
+        <router-view/>
+    </v-container>
+  </v-main>
+  </div>
 </template>
 
-<script>
-import Register from './components/Register'
+<style lang="scss">
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+}
 
-export default {
-  name: 'App',
+#nav {
+  padding: 30px;
 
-  components: {
-    Register
-  },
+  a {
+    font-weight: bold;
+    color: #2c3e50;
 
-  data () {
-    return {
-      //
+    &.router-link-exact-active {
+      color: #42b983;
     }
   }
 }
-</script>
+.container {
+  max-width: 100vw !important;
+}
+</style>
