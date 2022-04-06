@@ -44,7 +44,7 @@
       </div>
     </v-form>
   </v-col>
-  <v-col cols="12" sm="8" style="margin: 0 auto">
+  <v-col cols="12" md="8" style="margin: 0 auto">
     <v-img alt="image de sécurité" src="../assets/camera.jpg" />
   </v-col>
   <v-alert
