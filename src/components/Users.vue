@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <h2>Liste des utilisateurs</h2>
+  <div >
+    <h2 align="left" style="margin: 10px 0">Liste des utilisateurs</h2>
     <v-data-table
       :headers="headers"
       :items="getUsers"
@@ -62,6 +62,16 @@
               >
                 <v-text-field
                   v-model="editedItem.has_access"
+                  label="Visible"
+                ></v-text-field>
+              </v-col>
+              <v-col
+                cols="12"
+                sm="6"
+                md="4"
+              >
+                <v-text-field
+                  v-model="editedItem.role"
                   label="Visible"
                 ></v-text-field>
               </v-col>
@@ -146,6 +156,8 @@ export default {
         { text: 'PRENOM', value: 'firstname' },
         { text: 'NOM', value: 'lastname' },
         { text: 'EMAIL', value: 'email' },
+        { text: 'VISIBLE', value: 'has_access' },
+        { text: 'ROLE', value: 'role' },
         { text: 'Actions', value: 'actions', sortable: false }
       ],
       dialogEdit: false,
@@ -156,14 +168,16 @@ export default {
         lastname: '',
         email: '',
         password: '',
-        has_access: 1
+        has_access: 1,
+        role: ''
       },
       defaultItem: {
         fistname: '',
         lastname: '',
         email: '',
         password: '',
-        has_access: 1
+        has_access: 1,
+        role: ''
       }
     }
   },

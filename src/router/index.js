@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import { isAuthenticated } from '../store/getters'
+import { getUser, getToken } from '../store/getters'
 
 Vue.use(VueRouter)
 
@@ -17,13 +17,32 @@ const routes = [
         path: 'user/:id/',
         name: 'user',
         component: () => import('../components/Dashboard.vue'),
+        meta: {
+          requiresAuth: true,
+          userAuth: true,
+          adminAuth: true
+        },
         redirect: 'user/:id/video',
         children: [
           {
-            path: 'video', component: () => import('../components/Camera.vue'), name: 'video'
+            path: 'video',
+            component: () => import('../components/Camera.vue'),
+            name: 'video',
+            meta: {
+              requiresAuth: true,
+              userAuth: true,
+              adminAuth: true
+            }
           },
           {
-            path: 'users', component: () => import('../components/Users.vue')
+            path: 'users',
+            component: () => import('../components/Users.vue'),
+            name: 'users',
+            meta: {
+              requiresAuth: true,
+              userAuth: false,
+              adminAuth: true
+            }
           }
         ]
       }
@@ -31,12 +50,9 @@ const routes = [
   },
 
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    path: '/404',
+    name: 'NotFound',
+    component: () => import('../views/NotFound.vue')
   }
 
 ]
@@ -48,8 +64,32 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.name !== 'login' && !isAuthenticated) next({ name: 'login' })
-  else next()
+  const role = getUser.role
+  const accessToken = getToken
+
+  if (to.meta.requiresAuth) {
+    if (accessToken) {
+      if (to.meta.userAuth) {
+        if (role === 'user' || !role) {
+          return next()
+        } else {
+          router.push({
+            path: '/login'
+          })
+        }
+      } else if (to.meta.adminAuth) {
+        if (role === 'admin') {
+          return next()
+        } else {
+          router.push({
+            path: '/404'
+          })
+        }
+      }
+    }
+  } else {
+    return next()
+  }
 })
 
 export default router
