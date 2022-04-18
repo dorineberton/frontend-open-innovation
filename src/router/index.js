@@ -10,25 +10,26 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home,
-    default: '/login',
+    redirect: '/login',
     children: [
-      { path: '/login', component: () => import('../components/LogIn.vue'), name: 'login' }
-    ]
-  },
-  {
-    path: '/user/:id/',
-    name: 'user',
-    component: () => import('../components/Dashboard.vue'),
-    redirect: '/user/:id/video',
-    children: [
+      { path: '/login', component: () => import('../components/LogIn.vue'), name: 'login' },
       {
-        path: 'video', component: () => import('../components/Camera.vue'), name: 'video'
-      },
-      {
-        path: 'users', component: () => import('../components/Users.vue')
+        path: 'user/:id/',
+        name: 'user',
+        component: () => import('../components/Dashboard.vue'),
+        redirect: 'user/:id/video',
+        children: [
+          {
+            path: 'video', component: () => import('../components/Camera.vue'), name: 'video'
+          },
+          {
+            path: 'users', component: () => import('../components/Users.vue')
+          }
+        ]
       }
     ]
   },
+
   {
     path: '/about',
     name: 'About',

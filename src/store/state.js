@@ -3,6 +3,7 @@ export default () => {
     menuEnabled: false,
     user: {},
     token: null,
-    authenticated: false
+    authenticated: false,
+    users: []
   }
 }

@@ -107,7 +107,7 @@ export default {
           this.setUser(res.user)
           this.setToken(res.token)
           this.setAuthenticated(true)
-          this.$router.push({ path: `/user/${this.getUser.id}/dashboard/` })
+          this.$router.push({ path: `/user/${this.getUser.id}/` })
           this.setMenuEnabled(true)
         })
 

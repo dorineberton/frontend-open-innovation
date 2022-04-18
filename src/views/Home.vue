@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <!--<log-in />-->
+    <router-view />
   </div>
 </template>
 
