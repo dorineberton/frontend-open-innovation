@@ -53,7 +53,7 @@
     color="#FF7043"
     style="position: fixed; top: 70px; left: 10px"
 >
-  Une erreur est survenue
+  {{ message }}
 </v-alert>
   </v-row>
 </template>
@@ -67,6 +67,7 @@ export default {
 
   data () {
     return {
+      message: '',
       valid: false,
       password: '',
       email: '',
@@ -104,11 +105,16 @@ export default {
         .then(response => {
           const res = response.data
           console.log('res', res)
-          this.setUser(res.user)
-          this.setToken(res.token)
-          this.setAuthenticated(true)
-          this.$router.push({ path: `/user/${this.getUser.id}/` })
-          this.setMenuEnabled(true)
+          if (res.message !== '') {
+            this.message = res.message
+            this.alert = true
+          } else {
+            this.setUser(res.user)
+            this.setToken(res.token)
+            this.setAuthenticated(true)
+            this.$router.push({ path: `/user/${this.getUser.id}/` })
+            this.setMenuEnabled(true)
+          }
         })
 
       this.email && this.password ? this.$refs.form.reset() : this.alert = true
