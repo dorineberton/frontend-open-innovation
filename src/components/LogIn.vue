@@ -59,24 +59,39 @@
 </template>
 
 <script>
+import axios from 'axios'
+import { mapGetters, mapActions } from 'vuex'
+
 export default {
   name: 'Register',
 
-  data: () => ({
-    valid: false,
-    password: '',
-    email: '',
-    emailRules: [
-      v => !!v || 'L\'email est obligatoire.',
-      v => /.+@.+\..+/.test(v) || 'L\'email doit être valide'
-    ],
-    passwordRules: [
-      v => !!v || 'Le mot de passe est obligatoire.',
-      v => (v && v.length >= 8) || 'Le mot de passe doit faire plus de 8 caractères.'
-    ],
-    alert: false
-  }),
+  data () {
+    return {
+      valid: false,
+      password: '',
+      email: '',
+      emailRules: [
+        v => !!v || 'L\'email est obligatoire.',
+        v => /.+@.+\..+/.test(v) || 'L\'email doit être valide'
+      ],
+      passwordRules: [
+        v => !!v || 'Le mot de passe est obligatoire.',
+        v => (v && v.length >= 6) || 'Le mot de passe doit faire plus de 6 caractères.'
+      ],
+      alert: false
+    }
+  },
+
+  mounted () {
+    //
+  },
+
+  computed: {
+    ...mapGetters(['getUser'])
+  },
+
   methods: {
+    ...mapActions(['setMenuEnabled', 'setUser', 'setToken', 'setAuthenticated']),
     validate () {
       this.$refs.form.validate()
       const user = {
@@ -84,6 +99,18 @@ export default {
         password: this.password
       }
       console.log('user', user)
+      axios
+        .post('http://localhost:5000/login', user)
+        .then(response => {
+          const res = response.data
+          console.log('res', res)
+          this.setUser(res.user)
+          this.setToken(res.token)
+          this.setAuthenticated(true)
+          this.$router.push({ path: `/user/${this.getUser.id}/dashboard/` })
+          this.setMenuEnabled(true)
+        })
+
       this.email && this.password ? this.$refs.form.reset() : this.alert = true
       setTimeout(() => { this.alert = false }, 5000)
     },

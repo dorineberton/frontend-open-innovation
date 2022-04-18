@@ -8,6 +8,10 @@
       <router-link to="/" class="text-h2" style="text-decoration:none">
         <v-toolbar-title>Securiface</v-toolbar-title>
       </router-link>
+      <v-spacer />
+      <v-app-bar-nav-icon
+        @click="handleClickMenu"
+      ></v-app-bar-nav-icon>
   </v-app-bar>
   <v-main>
     <v-container>
@@ -16,7 +20,25 @@
   </v-main>
   </div>
 </template>
+<script>
+import { mapGetters } from 'vuex'
+export default {
+  name: 'App',
+  computed: {
+    ...mapGetters(['isMenuEnabled'])
+  },
 
+  mounted () {
+    console.log('enabled', this.isMenuEnabled)
+  },
+
+  methods: {
+    handleClickMenu () {
+      console.log('click')
+    }
+  }
+}
+</script>
 <style lang="scss">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
