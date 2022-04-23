@@ -1,7 +1,8 @@
 <template>
     <v-data-table
+      data-app
       :headers="headers"
-      :items="getUsers"
+      :items="users"
       class="elevation-1"
     >
     <template v-slot:top>
@@ -109,24 +110,24 @@
                 text
                 @click="close"
               >
-                Cancel
+                Annuler
               </v-btn>
               <v-btn
                 color="blue darken-1"
                 text
                 @click="save"
               >
-                Save
+                Enregistrer
               </v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
         <v-dialog v-model="dialogDelete" max-width="500px">
           <v-card>
-            <v-card-title class="text-h5">Are you sure you want to delete this item?</v-card-title>
+            <v-card-title class="text-h5">Voulez-vous vraiment supprimer cet utilisateur ?</v-card-title>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>
+              <v-btn color="blue darken-1" text @click="closeDelete">Annuler</v-btn>
               <v-btn color="blue darken-1" text @click="deleteItemConfirm">OK</v-btn>
               <v-spacer></v-spacer>
             </v-card-actions>
@@ -152,7 +153,7 @@
     <template v-slot:no-data>
       <v-btn
         color="primary"
-        @click="getUsers"
+        @click="users"
       >
         Reset
       </v-btn>
@@ -160,7 +161,8 @@
     </v-data-table>
 </template>
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
+import axios from 'axios'
 
 export default {
   name: 'Users',
@@ -169,6 +171,7 @@ export default {
   },
   data () {
     return {
+      users: [],
       headers: [
         {
           text: 'ID',
@@ -181,7 +184,7 @@ export default {
         { text: 'EMAIL', value: 'email' },
         { text: 'VISIBLE', value: 'has_access' },
         { text: 'ROLE', value: 'role' },
-        { text: 'Actions', value: 'actions', sortable: false }
+        { text: 'ACTIONS', value: 'actions', sortable: false }
       ],
       dialogEdit: false,
       dialogDelete: false,
@@ -204,10 +207,13 @@ export default {
       }
     }
   },
+  mounted () {
+    this.users = this.getUsers
+  },
   computed: {
-    ...mapGetters(['getUsers']),
+    ...mapGetters(['getUsers', 'getToken']),
     formTitle () {
-      return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
+      return this.editedIndex === -1 ? 'Nouvel utilisateur' : 'Modifier l\'utilisateur'
     }
   },
   watch: {
@@ -216,17 +222,23 @@ export default {
     },
     dialogDelete (val) {
       val || this.closeDelete()
+    },
+    getUsers (val) {
+      console.log('val change', val)
+      this.users = val
     }
   },
   methods: {
+    ...mapActions(['setUsers']),
     editItem (item) {
-      this.editedIndex = this.getUsers.indexOf(item)
+      this.editedIndex = this.users.indexOf(item)
+      console.log('editedintex', this.editedIndex)
       this.editedItem = Object.assign({}, item)
       this.dialogEdit = true
     },
 
     deleteItem (item) {
-      this.editedIndex = this.getUsers.indexOf(item)
+      this.editedIndex = this.users.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialogDelete = true
     },
@@ -254,12 +266,33 @@ export default {
     },
 
     save () {
+      const headers = { 'Content-Type': 'application/json', Authorization: 'Bearer ' + this.getToken }
+      let url = ''
+      let method = ''
+      console.log('index', this.editedIndex)
       if (this.editedIndex > -1) {
-        // Object.assign(this.getUsers[this.editedIndex], this.editedItem)
-        console.log('je update un utilisateur')
+        console.log('je modifie un utilisateur')
+        url = `http://localhost:5000/users/update/${this.editedItem.id}`
+        method = 'patch'
       } else {
-        // this.getUsers.push(this.editedItem)
-        console.log('je cree un utilisateur')
+        console.log('je crée un utilisateur', this.editedItem)
+        url = 'http://localhost:5000/users/create'
+        method = 'post'
+      }
+      if (this.editedItem) {
+        console.log('method', method, 'url', url)
+        axios({
+          method: method,
+          url: url,
+          headers: headers,
+          data: this.editedItem
+        })
+          .then(response => {
+            if (response.status === 200) {
+              axios.get('http://localhost:5000/users')
+                .then(res => this.setUsers(res.data.users))
+            }
+          })
       }
       this.close()
     }
