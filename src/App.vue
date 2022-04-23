@@ -10,9 +10,70 @@
       </router-link>
       <v-spacer />
       <v-app-bar-nav-icon
+        v-if="isMenuEnabled"
         @click="handleClickMenu"
       ></v-app-bar-nav-icon>
   </v-app-bar>
+  <v-navigation-drawer
+      v-model="isNavDrawerenabled"
+      absolute
+      right
+      :width="$vuetify.breakpoint.mdAndUp ? '350' : '200'"
+      temporary
+      hide-overlay
+      style="height: 100vh"
+  >
+        <v-list-item style="height: 64px">
+        <v-spacer />
+        <v-btn icon>
+          <v-icon @click="isNavDrawerenabled=false">
+            mdi-close
+          </v-icon>
+        </v-btn>
+    </v-list-item>
+
+    <v-divider></v-divider>
+    <v-list>
+      <v-list-item
+        class="camera"
+        style="margin-left: 10px"
+        @click="$router.push({name: 'video'})"
+      >
+        <v-list-item-icon>
+          <v-icon :size="$vuetify.breakpoint.mdAndUp ? '32' : '20'">mdi-video-outline</v-icon>
+        </v-list-item-icon>
+
+        <v-list-item-content>
+          <v-list-item-title :style="{fontSize: $vuetify.breakpoint.mdAndUp ? '20' : '12'}">Caméra</v-list-item-title>
+        </v-list-item-content>
+      </v-list-Item>
+        <v-list-item
+        class="people"
+        style="margin-left: 10px"
+        @click="$router.push({name: 'users'})"
+      >
+        <v-list-item-icon>
+          <v-icon :size="$vuetify.breakpoint.mdAndUp ? '32' : '20'">mdi-account-multiple-plus-outline</v-icon>
+        </v-list-item-icon>
+
+        <v-list-item-content>
+          <v-list-item-title :style="{fontSize: $vuetify.breakpoint.mdAndUp ? '20' : '12'}">Utilisateurs</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+    </v-list>
+
+    <template v-slot:append>
+      <div class="pa-2">
+        <v-btn
+          style="color:#fff; background:purple;"
+          block
+          @click="deconnection"
+        >
+          Déconnexion
+        </v-btn>
+      </div>
+    </template>
+  </v-navigation-drawer>
   <v-main>
     <v-container>
         <router-view/>
@@ -21,9 +82,14 @@
   </div>
 </template>
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'App',
+  data () {
+    return {
+      isNavDrawerenabled: false
+    }
+  },
   computed: {
     ...mapGetters(['isMenuEnabled'])
   },
@@ -33,8 +99,17 @@ export default {
   },
 
   methods: {
+    ...mapActions(['setToken', 'setAuthenticated', 'setMenuEnabled']),
     handleClickMenu () {
       console.log('click')
+      this.isNavDrawerenabled = !this.isNavDrawerenabled
+    },
+    deconnection () {
+      this.setToken(null)
+      this.setAuthenticated(false)
+      this.setMenuEnabled(false)
+      this.isNavDrawerenabled = false
+      this.$router.push({ name: 'login' })
     }
   }
 }
@@ -62,5 +137,14 @@ export default {
 }
 .container {
   max-width: 100vw !important;
+}
+.camera i.v-icon.v-icon {
+  color: rgb(0, 137, 123);
+}
+.people i.v-icon.v-icon {
+  color: rgb(25, 118, 210);
+}
+.v-image {
+  z-index: -1 !important;
 }
 </style>

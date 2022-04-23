@@ -105,7 +105,7 @@ export default {
         .then(response => {
           const res = response.data
           console.log('res', res)
-          if (res.message !== '') {
+          if (res.message !== '' && !res.user) {
             this.message = res.message
             this.alert = true
           } else {

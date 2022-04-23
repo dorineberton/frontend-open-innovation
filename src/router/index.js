@@ -40,8 +40,8 @@ const routes = [
             name: 'users',
             meta: {
               requiresAuth: true,
-              userAuth: false,
-              adminAuth: true
+              userAuth: true
+              // adminAuth: true
             }
           }
         ]
