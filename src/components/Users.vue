@@ -171,6 +171,7 @@ export default {
   },
   data () {
     return {
+      headersAxios: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + this.getToken },
       users: [],
       headers: [
         {
@@ -224,7 +225,6 @@ export default {
       val || this.closeDelete()
     },
     getUsers (val) {
-      console.log('val change', val)
       this.users = val
     }
   },
@@ -232,7 +232,6 @@ export default {
     ...mapActions(['setUsers']),
     editItem (item) {
       this.editedIndex = this.users.indexOf(item)
-      console.log('editedintex', this.editedIndex)
       this.editedItem = Object.assign({}, item)
       this.dialogEdit = true
     },
@@ -245,7 +244,18 @@ export default {
 
     deleteItemConfirm () {
       console.log('je supprime un utilisateur')
-      // this.getUsers.splice(this.editedIndex, 1)
+      const url = `http://localhost:5000/users/delete/${this.editedItem.id}`
+      axios({
+        method: 'DELETE',
+        url: url,
+        headers: this.headersAxios
+      })
+        .then(response => {
+          if (response.status === 200) {
+            axios.get('http://localhost:5000/users')
+              .then(res => this.setUsers(res.data.users))
+          }
+        })
       this.closeDelete()
     },
 
@@ -266,25 +276,20 @@ export default {
     },
 
     save () {
-      const headers = { 'Content-Type': 'application/json', Authorization: 'Bearer ' + this.getToken }
       let url = ''
       let method = ''
-      console.log('index', this.editedIndex)
       if (this.editedIndex > -1) {
-        console.log('je modifie un utilisateur')
         url = `http://localhost:5000/users/update/${this.editedItem.id}`
         method = 'patch'
       } else {
-        console.log('je crée un utilisateur', this.editedItem)
         url = 'http://localhost:5000/users/create'
         method = 'post'
       }
       if (this.editedItem) {
-        console.log('method', method, 'url', url)
         axios({
           method: method,
           url: url,
-          headers: headers,
+          headers: this.headersAxios,
           data: this.editedItem
         })
           .then(response => {
