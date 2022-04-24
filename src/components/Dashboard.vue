@@ -1,6 +1,12 @@
 <template>
   <div>
-    <h1>Tableau de bord</h1>
+    <div v-if="$vuetify.breakpoint.mdAndUp">
+      <h1>Tableau de bord</h1>
+    </div>
+    <div v-else>
+      <h2>Tableau de bord</h2>
+    </div>
+
     <router-view />
   </div>
 </template>
