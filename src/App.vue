@@ -44,10 +44,11 @@
         </v-list-item-icon>
 
         <v-list-item-content>
-          <v-list-item-title :style="{fontSize: $vuetify.breakpoint.mdAndUp ? '20' : '12'}">Caméra</v-list-item-title>
+          <v-list-item-title :style="{fontSize: $vuetify.breakpoint.mdAndUp ? '20' : '12'}">Caméras</v-list-item-title>
         </v-list-item-content>
       </v-list-Item>
         <v-list-item
+        v-if="this.getUser.role === 'admin'"
         class="people"
         style="margin-left: 10px"
         @click="$router.push({name: 'users'})"
@@ -91,7 +92,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['isMenuEnabled'])
+    ...mapGetters(['isMenuEnabled', 'getUser'])
   },
 
   mounted () {

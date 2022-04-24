@@ -243,7 +243,6 @@ export default {
     },
 
     deleteItemConfirm () {
-      console.log('je supprime un utilisateur')
       const url = `http://localhost:5000/users/delete/${this.editedItem.id}`
       axios({
         method: 'DELETE',
