@@ -171,7 +171,6 @@ export default {
   },
   data () {
     return {
-      headersAxios: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + this.getToken },
       users: [],
       headers: [
         {
@@ -244,10 +243,11 @@ export default {
 
     deleteItemConfirm () {
       const url = `http://localhost:5000/users/delete/${this.editedItem.id}`
+      console.log('headers', this.headersAxios)
       axios({
         method: 'DELETE',
         url: url,
-        headers: this.headersAxios
+        headers: { Authorization: 'Bearer ' + this.getToken, 'Content-Type': 'application/json' }
       })
         .then(response => {
           if (response.status === 200) {
@@ -288,7 +288,7 @@ export default {
         axios({
           method: method,
           url: url,
-          headers: this.headersAxios,
+          headers: { Authorization: 'Bearer ' + this.getToken, 'Content-Type': 'application/json' },
           data: this.editedItem
         })
           .then(response => {

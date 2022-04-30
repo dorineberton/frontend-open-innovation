@@ -109,6 +109,7 @@ export default {
             this.message = res.message
             this.alert = true
           } else {
+            console.log('test', res.token)
             this.setUser(res.user)
             this.setToken(res.token)
             this.setAuthenticated(true)
