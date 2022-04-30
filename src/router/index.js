@@ -40,6 +40,16 @@ const routes = [
             name: 'users',
             meta: {
               requiresAuth: true,
+              adminAuth: true
+              // adminAuth: true
+            }
+          },
+          {
+            path: 'scanner',
+            component: () => import('../components/QRCodeScan.vue'),
+            name: 'scanner',
+            meta: {
+              requiresAuth: true,
               userAuth: true
               // adminAuth: true
             }

@@ -16,9 +16,10 @@
   </v-app-bar>
   <v-navigation-drawer
       v-model="isNavDrawerenabled"
+      class="deep-purple accent-4"
       absolute
       right
-      :width="$vuetify.breakpoint.mdAndUp ? '350' : '200'"
+      :width="$vuetify.breakpoint.mdAndUp ? '350' : '250'"
       temporary
       hide-overlay
       style="height: 100vh"
@@ -61,6 +62,20 @@
           <v-list-item-title :style="{fontSize: $vuetify.breakpoint.mdAndUp ? '20' : '12'}">Utilisateurs</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
+      <v-list-item
+        v-if="$vuetify.breakpoint.smAndDown"
+        class="scanner"
+        style="margin-left: 10px"
+        @click="$router.push({name: 'scanner'})"
+      >
+        <v-list-item-icon>
+          <v-icon :size="$vuetify.breakpoint.mdAndUp ? '32' : '20'">mdi-barcode-scan</v-icon>
+        </v-list-item-icon>
+
+        <v-list-item-content>
+          <v-list-item-title :style="{fontSize: $vuetify.breakpoint.mdAndUp ? '20' : '12'}">Scanner le QR Code</v-list-item-title>
+        </v-list-item-content>
+      </v-list-Item>
     </v-list>
 
     <template v-slot:append>
@@ -140,12 +155,16 @@ export default {
   max-width: 100vw !important;
 }
 .camera i.v-icon.v-icon {
-  color: rgb(0, 137, 123);
+  color: blue;
+}
+.scanner i.v-icon.v-icon {
+  color: purple;
 }
 .people i.v-icon.v-icon {
-  color: rgb(25, 118, 210);
+  color: rgb(255, 95, 31);
 }
 .v-image {
   z-index: -1 !important;
 }
+
 </style>
