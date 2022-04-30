@@ -1,70 +1,89 @@
 <template>
-  <v-row>
-    <v-col cols="12" md="4" class="mx-auto" justify="center" style="display:flex;justify-content: center" >
-      <v-form
-      ref="form"
-      v-model="valid"
-      lazy-validation
-      class="mx-auto"
-      style="width: 300px"
-      @submit.prevent="validate"
-    >
-      <v-text-field
-        v-model="email"
-        :rules="emailRules"
-        label="Email"
-        required
-      ></v-text-field>
-      <v-text-field
-        v-model="password"
-        :rules="passwordRules"
-        label="Mot de passe"
-        required
-      ></v-text-field>
-      <br />
-      <div style="display:flex; justify-content: space-around">
-        <v-btn
-          :disabled="!valid"
-          color="#1976D2"
-          class="mr-4"
-          style="color:white"
-          @click="validate"
-        >
-          Valider
-        </v-btn>
+    <v-row>
+      <v-col cols="12" lg="6" class="mx-auto" justify="center">
+        <h1 style="margin-bottom: 10px">Se connecter</h1>
+        <div style="display: flex; justify-content: space-evenly">
+          <v-form
+            ref="form"
+            v-model="valid"
+            lazy-validation
+            class="mx-auto"
+            style="width: 300px"
+            @submit.prevent="validate"
+          >
+            <v-text-field
+              v-model="email"
+              :rules="emailRules"
+              label="Email"
+              required
+            ></v-text-field>
+            <v-text-field
+              v-model="password"
+              :rules="passwordRules"
+              label="Mot de passe"
+              required
+            ></v-text-field>
+            <br />
+            <div style="display:flex; justify-content: space-around">
+              <v-btn
+                :disabled="!valid"
+                color="#1976D2"
+                class="mr-4"
+                style="color:white"
+                @click="validate"
+              >
+                Valider
+              </v-btn>
 
-        <v-btn
-          color="#00897B"
-          class="mr-4"
-          style="color:white"
-          @click="reset"
-        >
-          Supprimer
-        </v-btn>
-      </div>
-    </v-form>
-  </v-col>
-  <v-col cols="12" md="8" style="margin: 0 auto">
-    <v-img alt="image de sécurité" src="../assets/camera.jpg" />
-  </v-col>
-  <v-alert
-    type="error"
-    v-model="alert"
-    color="#FF7043"
-    style="position: fixed; top: 70px; left: 10px"
->
-  {{ message }}
-</v-alert>
-  </v-row>
+              <v-btn
+                color="#00897B"
+                class="mr-4"
+                style="color:white"
+                @click="reset"
+              >
+                Supprimer
+              </v-btn>
+            </div>
+          </v-form>
+          <div v-if="$vuetify.breakpoint.mdAndUp" id="qrcode" align="center">
+            <qr-code
+              text="https://goo.gl/9eIWP9"
+              size="250"
+              color="#fff"
+              bg-color="#000"
+              error-level="L">
+            </qr-code>
+            <div style="margin: 12px 0">
+              <p>Se connecter via QR Code</p>
+              <p>Scanner le QR Code avec l'app mobile</p>
+
+            </div>
+          </div>
+        </div>
+    </v-col>
+    <v-col v-if="$vuetify.breakpoint.lgAndUp" cols="12" md="6" style="margin: 0 auto">
+      <v-img alt="image de sécurité" src="../assets/camera.jpg" />
+    </v-col>
+    <v-alert
+      type="error"
+      v-model="alert"
+      color="#FF7043"
+      style="position: fixed; top: 70px; left: 10px"
+  >
+    {{ message }}
+  </v-alert>
+    </v-row>
 </template>
 
 <script>
 import axios from 'axios'
 import { mapGetters, mapActions } from 'vuex'
-
+import QrCode from 'vue-qrcode-component'
 export default {
   name: 'Register',
-
+  components: {
+    QrCode
+  },
   data () {
     return {
       message: '',
