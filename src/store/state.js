@@ -4,6 +4,7 @@ export default () => {
     user: {},
     token: null,
     authenticated: false,
-    users: []
+    users: [],
+    urlBase: 'https://back-securiface.herokuapp.com/'
   }
 }

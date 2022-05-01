@@ -211,7 +211,7 @@ export default {
     this.users = this.getUsers
   },
   computed: {
-    ...mapGetters(['getUsers', 'getToken']),
+    ...mapGetters(['getUsers', 'getToken', 'getUrlBase']),
     formTitle () {
       return this.editedIndex === -1 ? 'Nouvel utilisateur' : 'Modifier l\'utilisateur'
     }
@@ -242,7 +242,7 @@ export default {
     },
 
     deleteItemConfirm () {
-      const url = `http://localhost:5000/users/delete/${this.editedItem.id}`
+      const url = `${this.getUrlBase}${this.editedItem.id}`
       console.log('headers', this.headersAxios)
       axios({
         method: 'DELETE',
@@ -251,7 +251,7 @@ export default {
       })
         .then(response => {
           if (response.status === 200) {
-            axios.get('http://localhost:5000/users')
+            axios.get(this.getUrlBase + 'users')
               .then(res => this.setUsers(res.data.users))
           }
         })
@@ -278,10 +278,10 @@ export default {
       let url = ''
       let method = ''
       if (this.editedIndex > -1) {
-        url = `http://localhost:5000/users/update/${this.editedItem.id}`
+        url = `${this.getUrlBase}users/update/${this.editedItem.id}`
         method = 'patch'
       } else {
-        url = 'http://localhost:5000/users/create'
+        url = this.getUrlBase + 'users/create'
         method = 'post'
       }
       if (this.editedItem) {
@@ -293,7 +293,7 @@ export default {
         })
           .then(response => {
             if (response.status === 200) {
-              axios.get('http://localhost:5000/users')
+              axios.get(this.getUrlBase + 'users')
                 .then(res => this.setUsers(res.data.users))
             }
           })

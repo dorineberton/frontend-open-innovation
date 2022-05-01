@@ -17,6 +17,7 @@
   </div>
 </template>
 <script>
+import { mapGetters } from 'vuex'
 import { QrcodeStream } from 'vue-qrcode-reader'
 export default {
   name: 'QRCodeScan',
@@ -28,10 +29,34 @@ export default {
       selected: { text: 'outline', value: this.paintOutline },
       isValid: undefined,
       camera: 'auto',
-      result: null
+      result: null,
+      connection: null
+    }
+  },
+  mounted: function () {
+    const connection = new WebSocket('ws://back-securiface.herokuapp.com/')
+    connection.onmessage = (event) => {
+      console.log('je  recois un message du serveur', event.data)
+    }
+    connection.onerror = error => {
+      console.log(`WebSocket error: ${error}`)
+    }
+    connection.onopen = (event) => {
+      console.log('connexion ouverte', event)
+    }
+    this.connection = connection
+  },
+  watch: {
+    result: function (val) {
+      console.log('resultat a changé', this.getToken)
+      this.result = val
+      console.log('etat connexion', this.connection.readyState)
+      this.connection.send(this.getToken)
+      // if (this.readyState && (this.result !== '' && this.result !== undefined)) this.connection.send(this.getToken)
     }
   },
   computed: {
+    ...mapGetters(['getToken']),
     validationPending () {
       return this.isValid === undefined && this.camera === 'off'
     },

@@ -120,7 +120,7 @@ export default {
       }
       console.log('user', user)
       axios
-        .post('http://localhost:5000/login', user)
+        .post('https://back-securiface.herokuapp.com/login', user)
         .then(response => {
           const res = response.data
           console.log('res', res)

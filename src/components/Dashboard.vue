@@ -12,7 +12,7 @@
 </template>
 <script>
 import axios from 'axios'
-import { mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'Dashboard',
@@ -24,11 +24,14 @@ export default {
   mounted () {
     this.getUsers()
   },
+  computed: {
+    ...mapGetters(['getUrlBase'])
+  },
   methods: {
     ...mapActions(['setUsers']),
     getUsers () {
       axios
-        .get('http://localhost:5000/users')
+        .get(this.getUrlBase + 'users')
         .then(response => {
           this.setUsers(response.data.users)
         })
