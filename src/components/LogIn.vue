@@ -107,7 +107,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['getUser'])
+    ...mapGetters(['getUser', 'getUrlBase'])
   },
 
   methods: {
@@ -120,7 +120,7 @@ export default {
       }
       console.log('user', user)
       axios
-        .post('http://localhost:5000/login', user)
+        .post(this.getUrlBase + 'login', user)
         .then(response => {
           const res = response.data
           console.log('res', res)
