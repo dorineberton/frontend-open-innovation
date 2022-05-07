@@ -242,7 +242,7 @@ export default {
     },
 
     deleteItemConfirm () {
-      const url = `${this.getUrlBase}${this.editedItem.id}`
+      const url = `${this.getUrlBase}users/delete/${this.editedItem.id}`
       console.log('headers', this.headersAxios)
       axios({
         method: 'DELETE',
