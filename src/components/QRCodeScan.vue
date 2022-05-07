@@ -34,7 +34,8 @@ export default {
     }
   },
   mounted: function () {
-    const connection = new WebSocket('ws://back-securiface.herokuapp.com/')
+    const connection = new WebSocket('ws://back-securiface.herokuapp.com:5001/')
+    // const connection = new WebSocket('ws://127.0.0.1:5001/')
     connection.onmessage = (event) => {
       console.log('je  recois un message du serveur', event.data)
     }

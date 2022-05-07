@@ -18,8 +18,7 @@ const routes = [
         component: () => import('../components/Dashboard.vue'),
         meta: {
           requiresAuth: true,
-          userAuth: true,
-          adminAuth: true
+          userAuth: true
         },
         redirect: 'user/:id/video',
         children: [
@@ -29,8 +28,7 @@ const routes = [
             name: 'video',
             meta: {
               requiresAuth: true,
-              userAuth: true,
-              adminAuth: true
+              userAuth: true
             }
           },
           {
@@ -49,7 +47,6 @@ const routes = [
             meta: {
               requiresAuth: true,
               userAuth: true
-              // adminAuth: true
             }
           }
         ]
