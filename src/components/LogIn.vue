@@ -20,6 +20,7 @@
             <v-text-field
               v-model="password"
               :rules="passwordRules"
+              type="password"
               label="Mot de passe"
               required
             ></v-text-field>

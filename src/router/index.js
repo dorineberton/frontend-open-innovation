@@ -1,8 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import { getUser, getToken } from '../store/getters'
-
+import store from '../store/index'
 Vue.use(VueRouter)
 
 const routes = [
@@ -41,7 +40,6 @@ const routes = [
             meta: {
               requiresAuth: true,
               adminAuth: true
-              // adminAuth: true
             }
           },
           {
@@ -74,13 +72,13 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  const role = getUser.role
-  const accessToken = getToken
-
+  const role = store.getters.getUser.role
+  const accessToken = store.getters.getToken
+  console.log('role', role)
   if (to.meta.requiresAuth) {
     if (accessToken) {
       if (to.meta.userAuth) {
-        if (role === 'user' || !role) {
+        if (role === 'user' || role === 'admin' || !role) {
           return next()
         } else {
           router.push({
