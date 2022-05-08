@@ -29,13 +29,12 @@ export default {
       selected: { text: 'outline', value: this.paintOutline },
       isValid: undefined,
       camera: 'auto',
-      result: null,
-      connection: null
+      result: null
     }
   },
-  mounted: function () {
+  /*
+  mounted () {
     const connection = new WebSocket('ws://back-securiface.herokuapp.com:5001/')
-    // const connection = new WebSocket('ws://127.0.0.1:5001/')
     connection.onmessage = (event) => {
       console.log('je  recois un message du serveur', event.data)
     }
@@ -47,17 +46,19 @@ export default {
     }
     this.connection = connection
   },
+  */
   watch: {
     result: function (val) {
+      const conn = this.getConnection
       console.log('resultat a changé', this.getToken)
       this.result = val
-      console.log('etat connexion', this.connection.readyState)
-      this.connection.send(this.getToken)
+      console.log('etat connexion', conn.readyState)
+      conn.send(this.getToken)
       // if (this.readyState && (this.result !== '' && this.result !== undefined)) this.connection.send(this.getToken)
     }
   },
   computed: {
-    ...mapGetters(['getToken']),
+    ...mapGetters(['getToken', 'getConnection']),
     validationPending () {
       return this.isValid === undefined && this.camera === 'off'
     },

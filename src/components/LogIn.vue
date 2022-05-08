@@ -104,7 +104,17 @@ export default {
   },
 
   mounted () {
-    //
+    const connection = new WebSocket('ws://back-securiface.herokuapp.com:5001/')
+    connection.onmessage = (event) => {
+      console.log('je  recois un message du serveur', event.data)
+    }
+    connection.onerror = error => {
+      console.log(`WebSocket error: ${error}`)
+    }
+    connection.onopen = (event) => {
+      console.log('connexion ouverte', event)
+    }
+    this.setConnection(connection)
   },
 
   computed: {
@@ -112,7 +122,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['setMenuEnabled', 'setUser', 'setToken', 'setAuthenticated']),
+    ...mapActions(['setMenuEnabled', 'setUser', 'setToken', 'setAuthenticated', 'setConnection']),
     validate () {
       this.$refs.form.validate()
       const user = {
