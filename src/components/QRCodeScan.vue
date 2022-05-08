@@ -52,9 +52,7 @@ export default {
       const conn = this.getConnection
       console.log('resultat a changé', this.getToken)
       this.result = val
-      console.log('etat connexion', conn.readyState)
-      conn.send(this.getToken)
-      // if (this.readyState && (this.result !== '' && this.result !== undefined)) this.connection.send(this.getToken)
+      conn.emit('message', { message: this.getToken, id: conn.id })
     }
   },
   computed: {

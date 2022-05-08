@@ -77,6 +77,7 @@
 </template>
 
 <script>
+import io from 'socket.io'
 import axios from 'axios'
 import { mapGetters, mapActions } from 'vuex'
 import QrCode from 'vue-qrcode-component'
@@ -104,17 +105,15 @@ export default {
   },
 
   mounted () {
-    const connection = new WebSocket(this.getUrlWS)
-    connection.onmessage = (event) => {
-      console.log('je  recois un message du serveur', event.data)
-    }
-    connection.onerror = error => {
-      console.log(`WebSocket error: ${error}`)
-    }
-    connection.onopen = (event) => {
-      console.log('connexion ouverte', event)
-    }
-    this.setConnection(connection)
+    const socket = io()
+    socket.on('connection', data => {
+      console.log('on connection je affiche data', data)
+      // Respond with a message including this clients' id sent from the server
+      // socket.emit('i am client', { data: 'foo!', id: 2 })
+    })
+    socket.on('error', console.error.bind(console))
+    socket.on('message', console.log.bind(console))
+    this.setConnection(socket)
   },
 
   computed: {
