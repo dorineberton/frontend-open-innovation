@@ -5,7 +5,10 @@ export default () => {
     token: null,
     authenticated: false,
     users: [],
-    urlBase: 'https://back-securiface.herokuapp.com/',
+    // urlBase: 'https://back-securiface.herokuapp.com/',
+    // urlWS: 'ws://back-securiface.herokuapp.com:5001/',
+    urlBase: 'localhost:8080/',
+    urlWS: 'ws://localhost:5001/',
     connection: ''
   }
 }

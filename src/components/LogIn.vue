@@ -104,7 +104,7 @@ export default {
   },
 
   mounted () {
-    const connection = new WebSocket('ws://back-securiface.herokuapp.com:5001/')
+    const connection = new WebSocket(this.getUrlWS)
     connection.onmessage = (event) => {
       console.log('je  recois un message du serveur', event.data)
     }
@@ -118,7 +118,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['getUser', 'getUrlBase'])
+    ...mapGetters(['getUser', 'getUrlBase', 'getUrlWS'])
   },
 
   methods: {
