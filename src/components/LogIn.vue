@@ -77,7 +77,7 @@
 </template>
 
 <script>
-import io from 'socket.io'
+import io from 'socket.io-client'
 import axios from 'axios'
 import { mapGetters, mapActions } from 'vuex'
 import QrCode from 'vue-qrcode-component'
@@ -105,14 +105,9 @@ export default {
   },
 
   mounted () {
-    const socket = io()
-    socket.on('connection', data => {
-      console.log('on connection je affiche data', data)
-      // Respond with a message including this clients' id sent from the server
-      // socket.emit('i am client', { data: 'foo!', id: 2 })
-    })
-    socket.on('error', console.error.bind(console))
-    socket.on('message', console.log.bind(console))
+    const socket = io(this.getUrlWS)
+
+    socket.emit('open', 'connection ok')
     this.setConnection(socket)
   },
 
