@@ -105,8 +105,7 @@ export default {
   },
 
   mounted () {
-    const socket = io(this.getUrlWS)
-
+    const socket = io.connect(this.getUrlWS)
     socket.emit('open', 'connection ok')
     this.setConnection(socket)
   },
