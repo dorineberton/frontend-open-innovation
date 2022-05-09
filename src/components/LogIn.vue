@@ -105,7 +105,8 @@ export default {
   },
 
   mounted () {
-    const socket = io.connect(this.getUrlWS)
+    // const socket = io.connect(this.getUrlWS)
+    const socket = io.connect('http://localhost:5000')
     socket.emit('open', 'connection ok')
     this.setConnection(socket)
   },
