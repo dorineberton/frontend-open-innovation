@@ -114,7 +114,7 @@ export default {
     const ws = new WebSocket('ws://localhost:5001')
 
     ws.on('open', function open () {
-      ws.send('something')
+      ws.send(JSON.stringify('hello du client'))
     })
 
     ws.on('message', function message (data) {
