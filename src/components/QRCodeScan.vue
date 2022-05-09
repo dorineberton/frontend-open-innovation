@@ -52,7 +52,7 @@ export default {
       const conn = this.getConnection
       console.log('resultat a changé', this.getToken)
       this.result = val
-      conn.emit('message', { message: this.getToken, id: conn.id })
+      conn.send({ message: this.getToken, id: conn.id })
     }
   },
   computed: {
