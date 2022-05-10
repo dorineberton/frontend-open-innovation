@@ -78,7 +78,8 @@
 
 <script>
 // import WebSocket from 'isomorphic-ws'
-import WS from '../ws-browser.js'
+// import WS from '../ws-browser.js'
+import { io } from 'socket.io-client'
 import axios from 'axios'
 import { mapGetters, mapActions } from 'vuex'
 import QrCode from 'vue-qrcode-component'
@@ -107,10 +108,15 @@ export default {
 
   mounted () {
     // const socket = io.connect(this.getUrlWS)
-    /*
-    const socket = io.connect('http://localhost:5000')
+
+    const socket = io.connect('http://localhost:5001')
     socket.emit('open', 'connection ok')
-    */
+
+    // receive a message from the server
+    socket.on('message', event => {
+      console.log('je  recois un message du serveur', event.data)
+    })
+    /*
     const connection = new WS('wss://localhost:5001/', {
       origin: 'https://front-securiface.herokuapp.com/'
     })
@@ -125,7 +131,8 @@ export default {
     connection.onopen = (event) => {
       console.log('connexion ouverte', event)
     }
-    this.setConnection(connection)
+    */
+    this.setConnection(socket)
   },
 
   computed: {
