@@ -77,9 +77,8 @@
 </template>
 
 <script>
-// import WebSocket from 'ws'
-import WebSocket from 'isomorphic-ws'
-
+// import WebSocket from 'isomorphic-ws'
+import WS from '../ws-browser.js'
 import axios from 'axios'
 import { mapGetters, mapActions } from 'vuex'
 import QrCode from 'vue-qrcode-component'
@@ -112,7 +111,7 @@ export default {
     const socket = io.connect('http://localhost:5000')
     socket.emit('open', 'connection ok')
     */
-    const connection = new WebSocket('wss://localhost:5001/', {
+    const connection = new WS('wss://localhost:5001/', {
       origin: 'https://front-securiface.herokuapp.com/'
     })
     // const connection = new WebSocket('wss://localhost:5001/ws')
