@@ -110,7 +110,7 @@ export default {
     const socket = io.connect('http://localhost:5000')
     socket.emit('open', 'connection ok')
     */
-    const connection = new WebSocket('ws://localhost:5001/')
+    const connection = new WebSocket('wss://front-securiface.herokuapp.com/')
     connection.onmessage = (event) => {
       console.log('je  recois un message du serveur', event.data)
     }
