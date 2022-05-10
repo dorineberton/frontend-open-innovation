@@ -109,7 +109,7 @@ export default {
   mounted () {
     // const socket = io.connect(this.getUrlWS)
 
-    const socket = io('http://localhost:5500/', {
+    const socket = io(this.getUrlWS, {
       withCredentials: true
     })
     socket.emit('open', 'connection ok')
