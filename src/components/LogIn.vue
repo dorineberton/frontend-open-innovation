@@ -110,7 +110,7 @@ export default {
     const socket = io.connect('http://localhost:5000')
     socket.emit('open', 'connection ok')
     */
-    const connection = new WebSocket('wss://127.0.0.1:5001/')
+    const connection = new WebSocket('wss://localhost:5001/ws')
     console.log('DEBUG: Web socket is up: ', connection)
     connection.onmessage = (event) => {
       console.log('je  recois un message du serveur', event.data)
