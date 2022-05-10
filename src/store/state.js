@@ -6,8 +6,8 @@ export default () => {
     authenticated: false,
     users: [],
     // urlBase: 'https://back-securiface.herokuapp.com/',
-    urlWS: 'localhost:5001',
-    urlBase: 'localhost:5000/',
+    urlWS: 'http://localhost:5500/',
+    urlBase: 'http://localhost:5000/',
     connection: ''
   }
 }
