@@ -110,7 +110,7 @@ export default {
     const socket = io.connect('http://localhost:5000')
     socket.emit('open', 'connection ok')
     */
-    const socket = new WebSocket('wss:////localhost:5001')
+    const socket = new WebSocket('wss://localhost:5001/')
 
     socket.onopen = function (e) {
       console.log('connection ouverte sur le front')
