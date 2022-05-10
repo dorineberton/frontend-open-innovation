@@ -110,32 +110,17 @@ export default {
     const socket = io.connect('http://localhost:5000')
     socket.emit('open', 'connection ok')
     */
-    const socket = new WebSocket('wss://localhost:5001/')
-
-    socket.onopen = function (e) {
-      console.log('connection ouverte sur le front')
-      socket.send('premier message venant du front')
+    const connection = new WebSocket('ws://localhost:5001/')
+    connection.onmessage = (event) => {
+      console.log('je  recois un message du serveur', event.data)
     }
-
-    socket.onmessage = function (event) {
-      alert(`[message] Data received from server: ${event.data}`)
+    connection.onerror = error => {
+      console.log(`WebSocket error: ${error}`)
     }
-
-    socket.onclose = function (event) {
-      if (event.wasClean) {
-        alert('[close] Connection closed cleanly')
-      } else {
-        // par exemple : processus serveur arrêté ou réseau en panne
-        // event.code est généralement 1006 dans ce cas
-        alert('[close] Connection died')
-      }
+    connection.onopen = (event) => {
+      console.log('connexion ouverte', event)
     }
-
-    socket.onerror = function (error) {
-      alert(`[error] ${error.message}`)
-    }
-
-    this.setConnection(socket)
+    this.setConnection(connection)
   },
 
   computed: {
