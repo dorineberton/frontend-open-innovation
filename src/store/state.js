@@ -9,6 +9,7 @@ export default () => {
     urlWS: 'https://socket-securiface.herokuapp.com/',
     // urlWS: 'http://localhost:5500/',
     // urlBase: 'http://localhost:5000/',
-    connection: ''
+    connection: '',
+    socketId: ''
   }
 }

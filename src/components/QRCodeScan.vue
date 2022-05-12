@@ -52,11 +52,12 @@ export default {
       const conn = this.getConnection
       console.log('resultat a changé', this.getToken)
       this.result = val
-      conn.send({ message: this.getToken, id: conn.id })
+      console.log('recup socket id avant envoi au back', this.getSocketId)
+      conn.send({ message: this.getToken, id: this.getSocketId })
     }
   },
   computed: {
-    ...mapGetters(['getToken', 'getConnection']),
+    ...mapGetters(['getToken', 'getConnection', 'getSocketId']),
     validationPending () {
       return this.isValid === undefined && this.camera === 'off'
     },
@@ -89,23 +90,13 @@ export default {
 
     onDecode (content) {
       this.result = content
-      // this.turnCameraOff()
       console.log('je suis dans ondecode')
-      // pretend it's taking really long
-      // await this.timeout(3000)
       return new Promise(resolve => {
         if (content.startsWith('http')) {
-          // this.turnCameraOn()
           this.isValid = true
           console.log('je vais envoyer le lien sur lordi', this.result)
         }
       })
-      // this.isValid = content.startsWith('http')
-      // console.log('isvalid', this.isValid, content)
-      // some more delay, so users have time to read the message
-      // await this.timeout(2000)
-
-      // this.turnCameraOn()
     },
     onInit (promise) {
       promise
@@ -121,14 +112,6 @@ export default {
       this.camera = 'off'
       console.log('je suis dans turncameraoff')
     }
-    /*
-    timeout (ms) {
-      console.log('je suis dans timeout')
-      return new Promise(resolve => {
-        window.setTimeout(resolve, ms)
-      })
-    }
-    */
   }
 }
 </script>

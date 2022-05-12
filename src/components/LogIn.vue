@@ -114,28 +114,13 @@ export default {
     })
     socket.emit('open', 'connection ok')
     socket.on('connect', () => {
+      this.setSocketId(socket.id)
       console.log('socket id', socket.id)
     })
     // receive a message from the server
     socket.on('message', event => {
       console.log('je  recois un message du serveur', event.data)
     })
-    /*
-    const connection = new WS('wss://localhost:5001/', {
-      origin: 'https://front-securiface.herokuapp.com/'
-    })
-    // const connection = new WebSocket('wss://localhost:5001/ws')
-    console.log('DEBUG: Web socket is up: ', connection)
-    connection.onmessage = (event) => {
-      console.log('je  recois un message du serveur', event.data)
-    }
-    connection.onerror = error => {
-      console.log(`WebSocket error: ${error}`)
-    }
-    connection.onopen = (event) => {
-      console.log('connexion ouverte', event)
-    }
-    */
     this.setConnection(socket)
   },
 
@@ -144,7 +129,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['setMenuEnabled', 'setUser', 'setToken', 'setAuthenticated', 'setConnection']),
+    ...mapActions(['setMenuEnabled', 'setUser', 'setToken', 'setAuthenticated', 'setConnection', 'setSocketId']),
     validate () {
       this.$refs.form.validate()
       const user = {
