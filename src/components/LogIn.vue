@@ -113,7 +113,9 @@ export default {
       withCredentials: true
     })
     socket.emit('open', 'connection ok')
-
+    socket.on('connect', () => {
+      console.log('socket id', socket.id)
+    })
     // receive a message from the server
     socket.on('message', event => {
       console.log('je  recois un message du serveur', event.data)
