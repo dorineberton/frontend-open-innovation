@@ -50,7 +50,7 @@ export default {
   watch: {
     result: function (val) {
       const conn = this.getConnection
-      console.log('resultat a changé', this.getToken)
+      console.log('resultat a changé', val)
       this.result = val
       console.log('recup socket id avant envoi au back', this.getSocketId)
       conn.send({ message: this.getToken, id: this.getSocketId })
@@ -74,7 +74,7 @@ export default {
     paintOutline (detectedCodes, ctx) {
       for (const detectedCode of detectedCodes) {
         const [firstPoint, ...otherPoints] = detectedCode.cornerPoints
-
+        console.log('firstPoint', firstPoint)
         ctx.strokeStyle = 'red'
 
         ctx.beginPath()
