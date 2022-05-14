@@ -48,7 +48,7 @@
           </v-form>
           <div v-if="$vuetify.breakpoint.mdAndUp" id="qrcode" align="center">
             <qr-code
-              text="https://goo.gl/9eIWP9"
+              text="https://goo.gl/9eIWP9/" + this.getSocketId
               size="250"
               color="#fff"
               bg-color="#000"
@@ -128,7 +128,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['getUser', 'getUrlBase', 'getUrlWS'])
+    ...mapGetters(['getUser', 'getUrlBase', 'getUrlWS', 'getSocketId'])
   },
 
   methods: {

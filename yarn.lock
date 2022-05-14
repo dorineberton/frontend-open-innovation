@@ -1648,6 +1648,15 @@
   optionalDependencies:
     "@zxing/text-encoding" "~0.9.0"
 
+"@zxing/library@^0.19.1":
+  version "0.19.1"
+  resolved "https://registry.yarnpkg.com/@zxing/library/-/library-0.19.1.tgz#68932436a9cf860e2148a6d6ae38fe1e27ea23a8"
+  integrity sha512-rKwvl3Uuqs8yf364iU9l3HDDaIx8yPv+CH6DbtQaQr67VdKLG22G1ukEp9fOdDefE6tpLtRAdMnTrgtpiaKAZw==
+  dependencies:
+    ts-custom-error "^3.0.0"
+  optionalDependencies:
+    "@zxing/text-encoding" "~0.9.0"
+
 "@zxing/text-encoding@~0.9.0":
   version "0.9.0"
   resolved "https://registry.yarnpkg.com/@zxing/text-encoding/-/text-encoding-0.9.0.tgz#fb50ffabc6c7c66a0c96b4c03e3d9be74864b70b"
@@ -8740,6 +8749,13 @@ vm-browserify@^1.0.1:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-1.1.2.tgz#78641c488b8e6ca91a75f511e7a3b32a86e5dda0"
   integrity sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ==
+
+vue-barcode-reader@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/vue-barcode-reader/-/vue-barcode-reader-1.0.2.tgz#71d481cb84e815f420129701607688901e298720"
+  integrity sha512-dDf7HeDZBAo7xYdmpfUql92pmZsjdFCHNy3JXd2FCer5mA8sNU42CDNNf/juaUIxjZNUXaBFwEX4pJD2zGqtvw==
+  dependencies:
+    "@zxing/library" "^0.19.1"
 
 vue-cli-plugin-vuetify@~2.4.8:
   version "2.4.8"

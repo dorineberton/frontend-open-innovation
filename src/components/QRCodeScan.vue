@@ -10,7 +10,7 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
-import { StreamBarcodeReader } from "vue-barcode-reader";
+import { StreamBarcodeReader } from 'vue-barcode-reader'
 export default {
   name: 'QRCodeScan',
   components: {
@@ -18,7 +18,7 @@ export default {
   },
   data () {
     return {
-      text: "",
+      text: '',
       id: null,
       result: null
     }
@@ -48,24 +48,23 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getToken', 'getConnection', 'getSocketId']),
+    ...mapGetters(['getToken', 'getConnection', 'getSocketId'])
     //
   },
   methods: {
-    onDecode(a, b, c) {
-      console.log(a, b, c);
-      this.text = a;
-      if (this.id) clearTimeout(this.id);
+    onDecode (a, b, c) {
+      console.log(a, b, c)
+      this.text = a
+      if (this.id) clearTimeout(this.id)
       this.id = setTimeout(() => {
         if (this.text === a) {
-          this.text = "";
+          this.text = ''
         }
-      }, 5000);
+      }, 5000)
     },
-    onLoaded() {
-      console.log("load");
-    },
-    },
+    onLoaded () {
+      console.log('load')
+    }
   }
 }
 </script>
