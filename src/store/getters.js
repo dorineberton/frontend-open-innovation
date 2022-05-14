@@ -6,4 +6,3 @@ export const getUsers = (state) => { return state.users }
 export const getUrlBase = (state) => { return state.urlBase }
 export const getUrlWS = (state) => { return state.urlWS }
 export const getConnection = (state) => { return state.connection }
-export const getQrCode = (state) => { return state.qrCode }

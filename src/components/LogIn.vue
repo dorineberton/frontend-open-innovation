@@ -135,7 +135,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['setMenuEnabled', 'setUser', 'setToken', 'setAuthenticated', 'setConnection', 'setQrCode']),
+    ...mapActions(['setMenuEnabled', 'setUser', 'setToken', 'setAuthenticated', 'setConnection']),
     validate () {
       this.$refs.form.validate()
       const user = {
@@ -171,8 +171,6 @@ export default {
       console.log('qrcode avant modif', this.text)
       this.text = this.socketId
       console.log('this.text apres clic', this.text)
-      console.log('socket id dans le qr code', this.socketId)
-      this.setQrCode(this.text)
     }
   }
 }

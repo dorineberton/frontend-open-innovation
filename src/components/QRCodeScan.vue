@@ -58,8 +58,8 @@ export default {
       const conn = this.getConnection
       console.log('resultat a changé', val)
       this.result = val
-      console.log('recup socket id avant envoi au back', this.getQrCode)
-      if (this.getQrCode) conn.send({ message: this.getToken, qrcode: this.getQrCode })
+      console.log('recup socket id avant envoi au back', val)
+      if (this.getQrCode) conn.send({ message: this.getToken, qrcode: val })
     }
   },
   computed: {
