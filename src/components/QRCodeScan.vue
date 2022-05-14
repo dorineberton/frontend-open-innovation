@@ -5,7 +5,6 @@
         class="qr-code"
         :key="_uid"
         :track="selected.value"
-        @detect="onDetect"
         @decode="onDecode"
         @init="onInit"
       >
@@ -95,22 +94,9 @@ export default {
       }
     },
 
-    async onDetect (promise) {
-      try {
-        const {
-          content, // decoded String
-          location // QR code coordinates
-        } = await promise
-
-        console.log('content', content, 'location', location)
-      } catch (error) {
-        console.log('error on detect', error)
-      }
-    },
-
     onDecode (content) {
       this.result = content
-      console.log('je suis dans ondecode')
+      console.log('je suis dans ondecode', content)
       return new Promise(resolve => {
         if (content !== '' || content !== undefined) {
           this.isValid = true
