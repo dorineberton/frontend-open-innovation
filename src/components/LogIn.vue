@@ -48,7 +48,8 @@
           </v-form>
           <div v-if="$vuetify.breakpoint.mdAndUp" id="qrcode" align="center">
             <qr-code
-              text="https://goo.gl/9eIWP9/" + this.getSocketId
+              v-if="getSocketId"
+              text="https://goo.gl/9eIWP9/"
               size="250"
               color="#fff"
               bg-color="#000"
