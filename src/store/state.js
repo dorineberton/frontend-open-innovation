@@ -10,6 +10,7 @@ export default () => {
     // urlWS: 'http://localhost:5500/',
     // urlBase: 'http://localhost:5000/',
     connection: '',
-    socketId: ''
+    socketId: '',
+    qrCode: ''
   }
 }

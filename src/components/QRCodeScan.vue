@@ -59,12 +59,12 @@ export default {
       const conn = this.getConnection
       console.log('resultat a changé', val)
       this.result = val
-      console.log('recup socket id avant envoi au back', this.getSocketId)
-      conn.send({ message: this.getToken, id: this.getSocketId })
+      console.log('recup socket id avant envoi au back', this.getQrCode)
+      conn.send({ message: this.getToken, qrcode: this.getQrCode })
     }
   },
   computed: {
-    ...mapGetters(['getToken', 'getConnection', 'getSocketId']),
+    ...mapGetters(['getToken', 'getConnection', 'getQrCode']),
     validationPending () {
       return this.isValid === undefined && this.camera === 'off'
     },
@@ -112,7 +112,7 @@ export default {
       this.result = content
       console.log('je suis dans ondecode')
       return new Promise(resolve => {
-        if (content.startsWith('http')) {
+        if (content !== '' || content !== undefined) {
           this.isValid = true
           console.log('je vais envoyer le lien sur lordi', this.result)
         }

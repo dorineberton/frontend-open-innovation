@@ -49,7 +49,7 @@
           <div v-if="$vuetify.breakpoint.mdAndUp" id="qrcode" align="center">
             <qr-code
               class="qr-code"
-              text="https://fr.wikipedia.org"
+              text=text
               size="300"
               color="#000"
               bg-color="#fff"
@@ -91,6 +91,7 @@ export default {
   },
   data () {
     return {
+      text: '',
       message: '',
       valid: false,
       password: '',
@@ -115,7 +116,7 @@ export default {
     })
     socket.emit('open', 'connection ok')
     socket.on('connect', () => {
-      this.setSocketId(socket.id)
+      this.setQrCode(socket.id)
       console.log('socket id', socket.id)
     })
     // receive a message from the server
@@ -129,11 +130,11 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['getUser', 'getUrlBase', 'getUrlWS', 'getSocketId'])
+    ...mapGetters(['getUser', 'getUrlBase', 'getUrlWS'])
   },
 
   methods: {
-    ...mapActions(['setMenuEnabled', 'setUser', 'setToken', 'setAuthenticated', 'setConnection', 'setSocketId']),
+    ...mapActions(['setMenuEnabled', 'setUser', 'setToken', 'setAuthenticated', 'setConnection', 'setQrCode']),
     validate () {
       this.$refs.form.validate()
       const user = {
