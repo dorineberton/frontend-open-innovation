@@ -116,8 +116,10 @@ export default {
     })
     socket.emit('open', 'connection ok')
     socket.on('connect', () => {
-      if (this.$vuetify.breakpoint.mdAndUp) this.setQrCode(socket.id)
-      console.log('socket id', socket.id)
+      if (this.$vuetify.breakpoint.mdAndUp) {
+        this.setQrCode(socket.id)
+        console.log('socket id', socket.id)
+      }
     })
     // receive a message from the server
     socket.on('message', event => {
