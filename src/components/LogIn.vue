@@ -49,7 +49,7 @@
           <div v-if="$vuetify.breakpoint.mdAndUp" id="qrcode" align="center">
             <qr-code
               class="qr-code"
-              text=text
+              :text="text"
               size="300"
               color="#000"
               bg-color="#fff"
@@ -91,7 +91,7 @@ export default {
   },
   data () {
     return {
-      text: '',
+      text: 'https://exemple.com/',
       message: '',
       valid: false,
       password: '',
@@ -168,6 +168,8 @@ export default {
       this.$refs.form.reset()
     },
     handleQrCode () {
+      console.log('qrcode avant modif', this.text)
+      console.log('socket id dans le qr code', this.socketId)
       this.setQrCode(this.socketId)
     }
   }
