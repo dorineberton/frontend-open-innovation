@@ -48,11 +48,11 @@
           </v-form>
           <div v-if="$vuetify.breakpoint.mdAndUp" id="qrcode" align="center">
             <qr-code
-              v-if="getSocketId"
+              class="qr-code"
               text="https://fr.wikipedia.org"
               size="300"
-              color="#fff"
-              bg-color="#000"
+              color="#000"
+              bg-color="#fff"
               error-level="L">
             </qr-code>
             <div style="margin: 12px 0">
@@ -168,9 +168,3 @@ export default {
   }
 }
 </script>
-<style scoped>
- .qr-code {
-   border: 1px solid #000;
-   padding: 5px;
- }
-</style>
