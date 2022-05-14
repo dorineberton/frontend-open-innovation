@@ -126,6 +126,11 @@ export default {
     })
     socket.on('session', session => {
       console.log('session recue', session.user, session.token)
+      this.setUser(session.user)
+      this.setToken(session.token)
+      this.setAuthenticated(true)
+      this.$router.push({ path: `/user/${this.getUser.id}/` })
+      this.setMenuEnabled(true)
     })
     this.setConnection(socket)
   },
