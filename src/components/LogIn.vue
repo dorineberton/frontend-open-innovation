@@ -56,8 +56,8 @@
               error-level="L">
             </qr-code>
             <div style="margin: 12px 0">
-              <p>Se connecter via QR Code</p>
-              <p>Scanner le QR Code avec l'app mobile</p>
+              <v-btn color="#7B1FA2" style="color: white" @click="handleQrCode">Se connecter via QR Code</v-btn>
+              <p style="margin-top: 10px">Scanner le QR Code avec l'app mobile</p>
 
             </div>
           </div>
@@ -104,7 +104,8 @@ export default {
         v => !!v || 'Le mot de passe est obligatoire.',
         v => (v && v.length >= 6) || 'Le mot de passe doit faire plus de 6 caractères.'
       ],
-      alert: false
+      alert: false,
+      socketId: null
     }
   },
 
@@ -116,10 +117,8 @@ export default {
     })
     socket.emit('open', 'connection ok')
     socket.on('connect', () => {
-      if (this.$vuetify.breakpoint.mdAndUp) {
-        this.setQrCode(socket.id)
-        console.log('socket id', socket.id)
-      }
+      console.log('socket id', socket.id)
+      this.socketId = socket.id
     })
     // receive a message from the server
     socket.on('message', event => {
@@ -167,6 +166,9 @@ export default {
     },
     reset () {
       this.$refs.form.reset()
+    },
+    handleQrCode () {
+      this.setQrCode(this.socketId)
     }
   }
 }
