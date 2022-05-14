@@ -122,8 +122,8 @@ export default {
     },
     deconnection () {
       const conn = this.getConnection
-      console.log('je veux me deconnecter', conn, this.getToken)
-      conn.emit('deconnexion', this.getToken)
+      console.log('je veux me deconnecter', this.getToken)
+      conn.emit('deconnection', this.getToken)
       this.setToken(null)
       this.setAuthenticated(false)
       this.setMenuEnabled(false)
