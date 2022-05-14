@@ -49,8 +49,8 @@
           <div v-if="$vuetify.breakpoint.mdAndUp" id="qrcode" align="center">
             <qr-code
               v-if="getSocketId"
-              text="https://goo.gl/9eIWP9/"
-              size="250"
+              text="https://fr.wikipedia.org"
+              size="300"
               color="#fff"
               bg-color="#000"
               error-level="L">
