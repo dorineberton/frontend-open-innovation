@@ -107,7 +107,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['isMenuEnabled', 'getUser', 'getToken'])
+    ...mapGetters(['isMenuEnabled', 'getUser', 'getToken', 'getConnection'])
   },
 
   mounted () {
@@ -121,14 +121,14 @@ export default {
       this.isNavDrawerenabled = !this.isNavDrawerenabled
     },
     deconnection () {
+      const conn = this.getConnection
+      console.log('je veux me deconnecter', conn, this.getToken)
+      conn.emit('deconnexion', this.getToken)
       this.setToken(null)
       this.setAuthenticated(false)
       this.setMenuEnabled(false)
       this.isNavDrawerenabled = false
       this.$router.push({ name: 'login' })
-      const conn = this.getConnection
-      console.log('je veux me deconnecter', conn, this.getToken)
-      conn.emit('deconnexion', this.getToken)
     }
   }
 }
