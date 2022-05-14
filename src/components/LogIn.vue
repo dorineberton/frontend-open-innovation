@@ -47,7 +47,9 @@
             </div>
           </v-form>
           <div v-if="$vuetify.breakpoint.mdAndUp" id="qrcode" align="center">
+            <div v-if="!isEnabledQrcode" class="f1-color" style="margin: auto; line-height: 300px; font-size: 32px; font-weight: 700">QR code</div>
             <qr-code
+              v-else
               class="qr-code"
               :text="text"
               size="300"
@@ -105,7 +107,8 @@ export default {
         v => (v && v.length >= 6) || 'Le mot de passe doit faire plus de 6 caractères.'
       ],
       alert: false,
-      socketId: null
+      socketId: null,
+      isEnabledQrcode: false
     }
   },
 
@@ -144,8 +147,8 @@ export default {
     validate () {
       this.$refs.form.validate()
       const user = {
-        email: this.email,
-        password: this.password
+        email: this.email.trim(),
+        password: this.password.trim()
       }
       console.log('user', user, this.getUrlBase + 'login')
       axios
@@ -174,9 +177,17 @@ export default {
     },
     handleQrCode () {
       console.log('qrcode avant modif', this.text)
+      this.isEnabledQrcode = true
       this.text = this.socketId
       console.log('this.text apres clic', this.text)
     }
   }
 }
 </script>
+<style scoped>
+.f1-color {
+  width: 300px;
+  height: 300px;
+  background: #f1f1f1
+}
+</style>
