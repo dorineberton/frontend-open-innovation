@@ -168,3 +168,9 @@ export default {
   }
 }
 </script>
+<style scoped>
+ .qr-code {
+   border: 1px solid #000;
+   padding: 5px;
+ }
+</style>
