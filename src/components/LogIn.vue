@@ -121,6 +121,9 @@ export default {
     socket.on('message', event => {
       console.log('je  recois un message du serveur', event.data)
     })
+    socket.on('session', session => {
+      console.log('session recue', session.user, session.token)
+    })
     this.setConnection(socket)
   },
 

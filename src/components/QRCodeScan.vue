@@ -1,7 +1,13 @@
 <template>
   <div>
     <h2>scanner</h2>
-      <qrcode-stream :key="_uid" :track="selected.value" @decode="onDecode" @init="onInit">
+      <qrcode-stream
+        class="qr-code"
+        :key="_uid"
+        :track="selected.value"
+        @decode="onDecode"
+        @init="onInit"
+      >
         <div v-if="validationSuccess" class="validation-success">
           This is a URL
         </div>
@@ -115,3 +121,9 @@ export default {
   }
 }
 </script>
+<style scoped>
+  .qr-code {
+    border: 1px solid #fff;
+    padding: 1px;
+  }
+</style>
