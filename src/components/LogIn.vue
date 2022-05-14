@@ -125,8 +125,8 @@ export default {
       console.log('je  recois un message du serveur', event.data)
     })
     socket.on('session', session => {
-      console.log('session recue', session.user, session.token)
-      this.setUser(session.user)
+      console.log('session recue', session.user[0], session.token)
+      this.setUser(session.user[0])
       this.setToken(session.token)
       this.setAuthenticated(true)
       this.$router.push({ path: `/user/${this.getUser.id}/` })
