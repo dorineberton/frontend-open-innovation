@@ -1,25 +1,41 @@
 <template>
   <div>
     <h2>scanner</h2>
-    <StreamBarcodeReader
-      @decode="(a, b, c) => onDecode(a, b, c)"
-      @loaded="() => onLoaded()"
-    ></StreamBarcodeReader>
-    Input Value: {{ text || "Nothing" }}
+      <qrcode-stream
+        class="qr-code"
+        :key="_uid"
+        :track="selected.value"
+        @detect="onDetect"
+        @decode="onDecode"
+        @init="onInit"
+      >
+        <div v-if="validationSuccess" class="validation-success">
+          This is a URL
+        </div>
+
+        <div v-if="validationFailure" class="validation-failure">
+          This is NOT a URL!
+        </div>
+
+        <div v-if="validationPending" class="validation-pending">
+          Long validation in progress...
+        </div>
+      </qrcode-stream>
   </div>
 </template>
 <script>
 import { mapGetters } from 'vuex'
-import { StreamBarcodeReader } from 'vue-barcode-reader'
+import { QrcodeStream } from 'vue-qrcode-reader'
 export default {
   name: 'QRCodeScan',
   components: {
-    StreamBarcodeReader
+    QrcodeStream
   },
   data () {
     return {
-      text: '',
-      id: null,
+      selected: { text: 'outline', value: this.paintOutline },
+      isValid: undefined,
+      camera: 'auto',
       result: null
     }
   },
@@ -48,23 +64,80 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getToken', 'getConnection', 'getSocketId'])
-    //
+    ...mapGetters(['getToken', 'getConnection', 'getSocketId']),
+    validationPending () {
+      return this.isValid === undefined && this.camera === 'off'
+    },
+
+    validationSuccess () {
+      return this.isValid === true
+    },
+
+    validationFailure () {
+      return this.isValid === false
+    }
   },
   methods: {
-    onDecode (a, b, c) {
-      console.log(a, b, c)
-      this.text = a
-      if (this.id) clearTimeout(this.id)
-      this.id = setTimeout(() => {
-        if (this.text === a) {
-          this.text = ''
+    paintOutline (detectedCodes, ctx) {
+      for (const detectedCode of detectedCodes) {
+        const [firstPoint, ...otherPoints] = detectedCode.cornerPoints
+        console.log('firstPoint', firstPoint)
+        ctx.strokeStyle = 'red'
+
+        ctx.beginPath()
+        ctx.moveTo(firstPoint.x, firstPoint.y)
+        for (const { x, y } of otherPoints) {
+          ctx.lineTo(x, y)
         }
-      }, 5000)
+        ctx.lineTo(firstPoint.x, firstPoint.y)
+        ctx.closePath()
+        ctx.stroke()
+      }
     },
-    onLoaded () {
-      console.log('load')
+
+    async onDetect (promise) {
+      try {
+        const {
+          content, // decoded String
+          location // QR code coordinates
+        } = await promise
+
+        console.log('content', content, 'location', location)
+      } catch (error) {
+        console.log('error on detect', error)
+      }
+    },
+
+    onDecode (content) {
+      this.result = content
+      console.log('je suis dans ondecode')
+      return new Promise(resolve => {
+        if (content.startsWith('http')) {
+          this.isValid = true
+          console.log('je vais envoyer le lien sur lordi', this.result)
+        }
+      })
+    },
+    onInit (promise) {
+      promise
+        .catch(console.error)
+        .then(this.resetValidationState)
+    },
+    turnCameraOn () {
+      this.camera = 'auto'
+      console.log('je suis dans turncameraon')
+    },
+
+    turnCameraOff () {
+      this.camera = 'off'
+      console.log('je suis dans turncameraoff')
     }
   }
 }
 </script>
+<style scoped>
+  .qr-code {
+    border: 1px solid #fff;
+    padding: 1px;
+  }
+</style>
