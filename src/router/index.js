@@ -13,7 +13,7 @@ const routes = [
     children: [
       { path: '/login', component: () => import('../components/LogIn.vue'), name: 'login' },
       {
-        path: 'user/',
+        path: 'user/:id/',
         name: 'user',
         component: () => import('../components/Dashboard.vue'),
         meta: {
@@ -24,7 +24,6 @@ const routes = [
         children: [
           {
             path: 'video',
-            redirect: 'user/:id/video',
             component: () => import('../components/Camera.vue'),
             name: 'video',
             meta: {
@@ -34,7 +33,6 @@ const routes = [
           },
           {
             path: 'users',
-            redirect: 'user/:id/users',
             component: () => import('../components/Users.vue'),
             name: 'users',
             meta: {
@@ -44,7 +42,6 @@ const routes = [
           },
           {
             path: 'scanner',
-            redirect: 'user/:id/scanner',
             component: () => import('../components/QRCodeScan.vue'),
             name: 'scanner',
             meta: {
