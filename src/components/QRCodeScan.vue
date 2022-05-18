@@ -7,19 +7,7 @@
         :track="selected.value"
         @decode="onDecode"
         @init="onInit"
-      >
-        <div v-if="validationSuccess" class="validation-success">
-          This is a URL
-        </div>
-
-        <div v-if="validationFailure" class="validation-failure">
-          This is NOT a URL!
-        </div>
-
-        <div v-if="validationPending" class="validation-pending">
-          Long validation in progress...
-        </div>
-      </qrcode-stream>
+      />
   </div>
 </template>
 <script>
@@ -38,21 +26,6 @@ export default {
       result: null
     }
   },
-  /*
-  mounted () {
-    const connection = new WebSocket('ws://back-securiface.herokuapp.com:5001/')
-    connection.onmessage = (event) => {
-      console.log('je  recois un message du serveur', event.data)
-    }
-    connection.onerror = error => {
-      console.log(`WebSocket error: ${error}`)
-    }
-    connection.onopen = (event) => {
-      console.log('connexion ouverte', event)
-    }
-    this.connection = connection
-  },
-  */
   watch: {
     result: function (val) {
       const conn = this.getConnection
