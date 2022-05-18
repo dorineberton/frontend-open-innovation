@@ -21,6 +21,7 @@ const routes = [
           userAuth: true
         },
         redirect: 'user/:id/video',
+        alias: '/user',
         children: [
           {
             path: 'video',
