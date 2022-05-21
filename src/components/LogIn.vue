@@ -1,5 +1,14 @@
 <template>
     <v-row>
+      <div v-if="validation" style="position: fixed; width: 100vw; height: 100vh; background: rgba(5,5,5,0.2);">
+        <v-progress-circular
+          :size="50"
+          color="blue"
+          indeterminate
+          style="position: fixed; left: 25%; top: 25%;transform: translate(-50%;-50%)"
+        >
+        </v-progress-circular>
+      </div>
       <v-col cols="12" lg="6" class="mx-auto" justify="center">
         <h1 style="margin-bottom: 10px">Se connecter</h1>
         <div style="display: flex; justify-content: space-evenly">
@@ -108,7 +117,8 @@ export default {
       ],
       alert: false,
       socketId: null,
-      isEnabledQrcode: false
+      isEnabledQrcode: false,
+      validation: false
     }
   },
 
@@ -146,6 +156,7 @@ export default {
     ...mapActions(['setMenuEnabled', 'setUser', 'setToken', 'setAuthenticated', 'setConnection']),
     validate () {
       this.$refs.form.validate()
+      this.validation = true
       const user = {
         email: this.email.trim(),
         password: this.password.trim()
@@ -156,6 +167,7 @@ export default {
         .then(response => {
           const res = response.data
           console.log('res', res)
+          this.validation = false
           if (res.message !== '' && !res.user) {
             this.message = res.message
             this.alert = true

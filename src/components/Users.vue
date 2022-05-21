@@ -3,7 +3,7 @@
       data-app
       :headers="headers"
       :items="users"
-      class="elevation-1"
+      class="elevation-1 users"
     >
     <template v-slot:top>
       <v-toolbar
@@ -18,7 +18,8 @@
         <v-spacer></v-spacer>
         <v-dialog
           v-model="dialogEdit"
-          max-width="500px"
+          max-width="500"
+          min-width="300"
         >
           <template v-slot:activator="{ on, attrs }">
             <v-btn
@@ -303,27 +304,39 @@ export default {
   }
 }
 </script>
-<style scoped>
+<style>
 @media screen and (max-width: 520px) {
-  .v-data-table {
-    max-width: 300px;
+  .users .v-overlay.v-overlay--active {
+    width: 100vw !important;
+  }
+  .users {
+    width: 300px !important;
     margin: 0 auto;
   }
-  .btn-add-user {
+  .users .btn-add-user {
     height: 46px;
     width: 46px;
     margin-right: -10px;
   }
-  .v-dialog__content {
+  .users .v-dialog {
+    margin: unset !important;
+  }
+  .users .v-dialog--active {
+    width: 90%;
+    margin: 0 auto;
+  }
+  .users .v-dialog__content {
+    display: unset !important;
     height: 100%;
-    left: 50%;
     pointer-events: none;
-    position: fixed;
-    top: 50%;
-    transition: .2s cubic-bezier(.25,.8,.25,1),z-index 1ms;
+    position: absolute;
+    top: 0;
+    transition: 0.2s cubic-bezier(0.25, 0.8, 0.25, 1), z-index 1ms;
     width: 100%;
+    margin: 0 5%;
+    z-index: 6;
     outline: none;
-    transform: translate(-50%, -50%);
   }
 }
+
 </style>
