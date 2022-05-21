@@ -22,7 +22,7 @@
         >
           <template v-slot:activator="{ on, attrs }">
             <v-btn
-              class="mx-2"
+              class="btn-add-user mx-2"
               fab
               v-bind="attrs"
               v-on="on"
@@ -303,3 +303,27 @@ export default {
   }
 }
 </script>
+<style scoped>
+@media screen and (max-width: 520px) {
+  .v-data-table {
+    max-width: 300px;
+    margin: 0 auto;
+  }
+  .btn-add-user {
+    height: 46px;
+    width: 46px;
+    margin-right: -10px;
+  }
+  .v-dialog__content {
+    height: 100%;
+    left: 50%;
+    pointer-events: none;
+    position: fixed;
+    top: 50%;
+    transition: .2s cubic-bezier(.25,.8,.25,1),z-index 1ms;
+    width: 100%;
+    outline: none;
+    transform: translate(-50%, -50%);
+  }
+}
+</style>
