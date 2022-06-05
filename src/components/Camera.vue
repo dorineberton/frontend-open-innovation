@@ -11,7 +11,7 @@
   </div>
   <div v-else>
     <h3>Caméra</h3>
-    <video autoplay :width="$vuetify.breakpoint.xs ? 300 : 500" style="margin-top: 36px">
+    <video autoplay :width="300" style="margin-top: 36px">
       <source
         src="@/assets/video.mp4"
         type="video/mp4"
